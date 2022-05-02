@@ -4,7 +4,7 @@ buildscript {
     }
 }
 
-group 'com.guflimc.guibuilder'
+group 'com.guflimc.mastergui'
 version '1.0-SNAPSHOT'
 
 allprojects {
@@ -24,7 +24,9 @@ allprojects {
     repositories {
         mavenCentral()
     }
+}
 
+configure(subprojects.findAll {it.name != 'api'}) {
     publishing {
         repositories {
             maven {

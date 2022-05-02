@@ -1,4 +1,4 @@
-package com.guflimc.guibuilder.api;
+package com.guflimc.mastergui.api.scheme;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,13 +29,13 @@ public class MenuScheme {
     }
 
 
-    public int getRows() {
+    public int size() {
         return mask.length;
     }
 
-    public boolean isMasked(int slot) {
-        int row = slot / 9;
-        int pos = slot % 9;
+    public boolean isMasked(int index) {
+        int row = index / 9;
+        int pos = index % 9;
 
         if (row >= mask.length) {
             return false;
@@ -44,13 +44,13 @@ public class MenuScheme {
         return ((mask[row] >> pos) & 1) == 1;
     }
 
-    public List<Integer> getSlots() {
-        List<Integer> slots = new ArrayList<>();
-        for (int slot = 0; slot < mask.length * 9; slot++) {
-            if (isMasked(slot)) {
-                slots.add(slot);
+    public List<Integer> indices() {
+        List<Integer> indices = new ArrayList<>();
+        for (int index = 0; index < mask.length * 9; index++) {
+            if (isMasked(index)) {
+                indices.add(index);
             }
         }
-        return slots;
+        return indices;
     }
 }

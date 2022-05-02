@@ -1,4 +1,4 @@
-rootProject.name = 'GUIMaster'
+rootProject.name = 'MasterGUI'
 
 include(
 	'api',

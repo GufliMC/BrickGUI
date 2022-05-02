@@ -1,0 +1,46 @@
+buildscript {
+    repositories {
+        maven { url 'https://plugins.gradle.org/m2' }
+    }
+}
+
+group 'com.guflimc.guibuilder'
+version '1.0-SNAPSHOT'
+
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'maven-publish'
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    group = this.group
+    version = this.version
+
+    tasks.withType(JavaCompile) {
+        options.encoding = 'UTF-8'
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+    publishing {
+        repositories {
+            maven {
+                name = "Jorisg"
+                url = uri("https://repo.jorisg.com/snapshots")
+                credentials(org.gradle.api.credentials.PasswordCredentials)
+            }
+        }
+
+        publications {
+            release(MavenPublication) {
+                from components.java
+                groupId = rootProject.group
+                artifactId = project.name
+                version = rootProject.version
+            }
+        }
+    }
+}

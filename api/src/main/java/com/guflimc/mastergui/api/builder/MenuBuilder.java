@@ -56,7 +56,7 @@ public class MenuBuilder<T extends MenuItem> {
         return this;
     }
 
-    protected T[] compile() {
+    protected final T[] compile() {
         if ( items.size() > 10 ) {
             throw new UnsupportedOperationException("More than 10 items is not supported.");
         }

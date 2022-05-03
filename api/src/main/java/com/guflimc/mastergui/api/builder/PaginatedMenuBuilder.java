@@ -33,7 +33,7 @@ public class PaginatedMenuBuilder<T extends MenuItem> {
         return this;
     }
 
-    public T[] compile(int page, T back, T next) {
+    protected final T[] compile(int page, T back, T next) {
         if ( size <= 0 ) {
             throw new IllegalStateException("Size must be greater than 0");
         }

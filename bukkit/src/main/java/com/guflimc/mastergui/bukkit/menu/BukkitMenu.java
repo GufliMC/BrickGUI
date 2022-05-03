@@ -3,7 +3,9 @@ package com.guflimc.mastergui.bukkit.menu;
 import com.guflimc.mastergui.api.menu.Menu;
 import com.guflimc.mastergui.bukkit.api.IBukkitMenu;
 import org.bukkit.Bukkit;
+import org.bukkit.Sound;
 import org.bukkit.entity.HumanEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -12,8 +14,20 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class BukkitMenu extends Menu<BukkitMenuItem> implements IBukkitMenu {
+
+    public static Consumer<InventoryClickEvent> soundWrapper(Function<InventoryClickEvent, Boolean> func) {
+        return (event) -> {
+            Sound sound = func.apply(event) ? Sound.UI_BUTTON_CLICK : Sound.ENTITY_VILLAGER_NO;
+            if (event.getWhoClicked() instanceof Player p) {
+                p.playSound(p.getEyeLocation(), sound, 1f, 1f);
+            }
+        };
+    }
+
+    //
 
     public final Inventory inventory;
     private final BukkitRegistry registry;
@@ -57,6 +71,11 @@ public class BukkitMenu extends Menu<BukkitMenuItem> implements IBukkitMenu {
     }
 
     @Override
+    public void setItem(int index, ItemStack itemStack, Function<InventoryClickEvent, Boolean> onClick) {
+        this.setItem(index, new BukkitMenuItem(itemStack, soundWrapper(onClick)));
+    }
+
+    @Override
     public ItemStack[] items() {
         return Arrays.stream(super.items).map(BukkitMenuItem::handle).toArray(ItemStack[]::new);
     }
@@ -89,7 +108,7 @@ public class BukkitMenu extends Menu<BukkitMenuItem> implements IBukkitMenu {
 
     public void dispatchClick(InventoryClickEvent event) {
         BukkitMenuItem item = super.items[event.getSlot()];
-        if ( item != null && item.callback() != null) {
+        if (item != null && item.callback() != null) {
             item.callback().accept(event);
         }
 

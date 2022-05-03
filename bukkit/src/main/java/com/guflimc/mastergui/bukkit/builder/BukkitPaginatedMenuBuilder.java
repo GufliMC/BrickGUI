@@ -66,12 +66,7 @@ public class BukkitPaginatedMenuBuilder extends PaginatedMenuBuilder<BukkitMenuI
 
     @Override
     public BukkitPaginatedMenuBuilder withHotbarItem(int index, ItemStack itemStack, Function<InventoryClickEvent, Boolean> consumer) {
-        this.withHotbarItem(index, itemStack, (event) -> {
-            Sound sound = consumer.apply(event) ? Sound.UI_BUTTON_CLICK : Sound.ENTITY_VILLAGER_NO;
-            if ( event.getWhoClicked() instanceof Player p) {
-                p.playSound(p.getEyeLocation(), sound, 1f, 1f);
-            }
-        });
+        this.withHotbarItem(index, itemStack, BukkitMenu.soundWrapper(consumer));
         return this;
     }
 

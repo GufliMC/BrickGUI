@@ -8,7 +8,10 @@ import com.guflimc.mastergui.bukkit.builder.BukkitPaginatedMenuBuilder;
 import com.guflimc.mastergui.bukkit.listener.BukkitMenuListener;
 import com.guflimc.mastergui.bukkit.menu.BukkitMenu;
 import com.guflimc.mastergui.bukkit.menu.BukkitRegistry;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.Optional;
 
 public class BukkitMasterGUI {
 
@@ -38,5 +41,9 @@ public class BukkitMasterGUI {
 
     public static IBukkitPaginatedMenuBuilder paginatedBuilder() {
         return new BukkitPaginatedMenuBuilder(registry);
+    }
+
+    public static Optional<IBukkitMenu> openedMenu(Player player) {
+        return registry.get(player).map(menu -> menu);
     }
 }

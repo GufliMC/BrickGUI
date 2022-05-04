@@ -32,10 +32,7 @@ public class BukkitMenuListener implements Listener {
     public void onInventoryClick(InventoryClickEvent event) {
         registry.get(event.getWhoClicked())
                 .filter(gui -> gui.inventory == event.getInventory())
-                .ifPresent(gui -> {
-                    event.setCancelled(true);
-                    gui.dispatchClick(event);
-                });
+                .ifPresent(gui -> gui.dispatchClick(event));
     }
 
 }

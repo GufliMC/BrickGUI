@@ -116,9 +116,13 @@ public class BukkitMenu extends Menu<BukkitMenuItem> implements IBukkitMenu {
     //
 
     public void dispatchClick(InventoryClickEvent event) {
-        BukkitMenuItem item = super.items[event.getSlot()];
-        if (item != null && item.callback() != null) {
-            item.callback().accept(event);
+        if ( event.getClickedInventory() == event.getInventory() ) {
+            event.setCancelled(true);
+
+            BukkitMenuItem item = super.items[event.getSlot()];
+            if (item != null && item.callback() != null) {
+                item.callback().accept(event);
+            }
         }
 
         clickListeners.forEach(listener -> listener.accept(event));

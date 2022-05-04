@@ -19,7 +19,7 @@ public abstract class AbstractItemStackBuilder<B extends AbstractItemStackBuilde
     protected final ItemStack itemStack;
 
     protected AbstractItemStackBuilder(ItemStack itemStack) {
-        this.itemStack = Objects.requireNonNull(itemStack, "itemStack");
+        this.itemStack = Objects.requireNonNull(itemStack, "ItemStack cannot be null.").clone();
     }
 
     public ItemStack build() {

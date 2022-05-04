@@ -27,23 +27,34 @@ public class BukkitMasterGUI {
         plugin.getServer().getPluginManager().registerEvents(listener, plugin);
     }
 
+    private static void assertListener() {
+        if ( listener == null ) {
+            throw new IllegalStateException("MasterGUI events are not registered. Call BukkitMasterGUI.register(plugin) first.");
+        }
+    }
+
     public static IBukkitMenu create(int size) {
+        assertListener();
         return new BukkitMenu(registry, size);
     }
 
     public static IBukkitMenu create(int size, String title) {
+        assertListener();
         return new BukkitMenu(registry, size, title);
     }
 
     public static IBukkitMenuBuilder builder() {
+        assertListener();
         return new BukkitMenuBuilder(registry);
     }
 
     public static IBukkitPaginatedMenuBuilder paginatedBuilder() {
+        assertListener();
         return new BukkitPaginatedMenuBuilder(registry);
     }
 
     public static Optional<IBukkitMenu> openedMenu(Player player) {
+        assertListener();
         return registry.get(player).map(menu -> menu);
     }
 }

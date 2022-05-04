@@ -39,6 +39,10 @@ public class BukkitMenu extends Menu<BukkitMenuItem> implements IBukkitMenu {
     public BukkitMenu(BukkitRegistry registry, int size, String title) {
         super(BukkitMenuItem.class, size);
         this.registry = registry;
+
+        if ( title == null ) {
+            title = "";
+        }
         this.inventory = Bukkit.createInventory(null, size, title);
     }
 
@@ -54,6 +58,11 @@ public class BukkitMenu extends Menu<BukkitMenuItem> implements IBukkitMenu {
 
     @Override
     public void setItem(int index, BukkitMenuItem item) {
+        if ( item == null ) {
+            super.removeItem(index);
+            return;
+        }
+
         super.setItem(index, item);
         inventory.setItem(index, item.handle());
     }

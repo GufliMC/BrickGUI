@@ -20,6 +20,10 @@ dependencies {
 }
 ```
 
+### Javadocs
+
+* [Spigot](https://guflimc.github.io/BrickGUI/spigot)
+
 ### Examples
 
 Register events when the plugin enables.

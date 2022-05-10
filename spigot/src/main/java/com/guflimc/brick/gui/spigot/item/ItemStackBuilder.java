@@ -1,8 +1,6 @@
 package com.guflimc.brick.gui.spigot.item;
 
-import com.guflimc.brick.gui.spigot.bukkit.item.specific.*;
 import com.guflimc.brick.gui.spigot.item.specific.*;
-import com.guflimc.mastergui.bukkit.item.specific.*;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;

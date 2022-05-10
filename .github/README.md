@@ -9,6 +9,7 @@ A Minecraft library for creating GUIs.
 * [x] Spigot / Paper (1.18+)
 
 ## Usage
+
 ### Gradle
 ```
 repositories {
@@ -16,13 +17,13 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.guflimc.brick.gui:spigot:1.0-SNAPSHOT'
+    implementation 'com.guflimc.brick.gui:spigot-api:1.0-SNAPSHOT'
 }
 ```
 
 ### Javadocs
 
-* [Spigot](https://guflimc.github.io/BrickGUI/spigot)
+* [Spigot](https://guflimc.github.io/BrickGUI/spigot-api)
 
 ### Examples
 

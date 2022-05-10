@@ -1,7 +1,5 @@
 rootProject.name = 'BrickGUI'
 
-include(
-	'api',
-    'spigot',
-)
+include 'api'
+include 'spigot-api'
 

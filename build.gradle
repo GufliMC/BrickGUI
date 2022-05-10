@@ -1,15 +1,9 @@
-buildscript {
-    repositories {
-        maven { url 'https://plugins.gradle.org/m2' }
-    }
-}
 
 group 'com.guflimc.brick.gui'
 version '1.0-SNAPSHOT'
 
 allprojects {
     apply plugin: 'java'
-    apply plugin: 'maven-publish'
 
     sourceCompatibility = 1.17
     targetCompatibility = 1.17
@@ -26,7 +20,9 @@ allprojects {
     }
 }
 
-configure(subprojects.findAll {it.name != 'api'}) {
+configure(subprojects.findAll {it.name.contains('-api') }) {
+    apply plugin: 'maven-publish'
+
     publishing {
         repositories {
             maven {

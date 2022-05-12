@@ -56,6 +56,7 @@ loadScripts(document, 'script');</script>
 <li><a href="com/guflimc/brick/gui/spigot/package-tree.html">com.guflimc.brick.gui.spigot</a>, </li>
 <li><a href="com/guflimc/brick/gui/spigot/api/package-tree.html">com.guflimc.brick.gui.spigot.api</a>, </li>
 <li><a href="com/guflimc/brick/gui/spigot/builder/package-tree.html">com.guflimc.brick.gui.spigot.builder</a>, </li>
+<li><a href="com/guflimc/brick/gui/spigot/hotbar/package-tree.html">com.guflimc.brick.gui.spigot.hotbar</a>, </li>
 <li><a href="com/guflimc/brick/gui/spigot/item/package-tree.html">com.guflimc.brick.gui.spigot.item</a>, </li>
 <li><a href="com/guflimc/brick/gui/spigot/item/specific/package-tree.html">com.guflimc.brick.gui.spigot.item.specific</a>, </li>
 <li><a href="com/guflimc/brick/gui/spigot/listener/package-tree.html">com.guflimc.brick.gui.spigot.listener</a>, </li>
@@ -80,6 +81,7 @@ loadScripts(document, 'script');</script>
 </li>
 <li class="circle">com.guflimc.brick.gui.api.menu.<a href="com/guflimc/brick/gui/api/menu/Menu.html" class="type-name-link" title="class in com.guflimc.brick.gui.api.menu">Menu</a>&lt;T&gt;
 <ul>
+<li class="circle">com.guflimc.brick.gui.spigot.hotbar.<a href="com/guflimc/brick/gui/spigot/hotbar/SpigotHotbar.html" class="type-name-link" title="class in com.guflimc.brick.gui.spigot.hotbar">SpigotHotbar</a> (implements com.guflimc.brick.gui.spigot.api.<a href="com/guflimc/brick/gui/spigot/api/ISpigotHotbar.html" title="interface in com.guflimc.brick.gui.spigot.api">ISpigotHotbar</a>)</li>
 <li class="circle">com.guflimc.brick.gui.spigot.menu.<a href="com/guflimc/brick/gui/spigot/menu/SpigotMenu.html" class="type-name-link" title="class in com.guflimc.brick.gui.spigot.menu">SpigotMenu</a> (implements com.guflimc.brick.gui.spigot.api.<a href="com/guflimc/brick/gui/spigot/api/ISpigotMenu.html" title="interface in com.guflimc.brick.gui.spigot.api">ISpigotMenu</a>)</li>
 </ul>
 </li>
@@ -95,6 +97,8 @@ loadScripts(document, 'script');</script>
 </ul>
 </li>
 <li class="circle">com.guflimc.brick.gui.spigot.<a href="com/guflimc/brick/gui/spigot/SpigotBrickGUI.html" class="type-name-link" title="class in com.guflimc.brick.gui.spigot">SpigotBrickGUI</a></li>
+<li class="circle">com.guflimc.brick.gui.spigot.hotbar.<a href="com/guflimc/brick/gui/spigot/hotbar/SpigotHotbarItem.html" class="type-name-link" title="class in com.guflimc.brick.gui.spigot.hotbar">SpigotHotbarItem</a> (implements com.guflimc.brick.gui.api.menu.<a href="com/guflimc/brick/gui/api/menu/MenuItem.html" title="interface in com.guflimc.brick.gui.api.menu">MenuItem</a>)</li>
+<li class="circle">com.guflimc.brick.gui.spigot.listener.<a href="com/guflimc/brick/gui/spigot/listener/SpigotHotbarListener.html" class="type-name-link" title="class in com.guflimc.brick.gui.spigot.listener">SpigotHotbarListener</a> (implements org.bukkit.event.Listener)</li>
 <li class="circle">com.guflimc.brick.gui.spigot.menu.<a href="com/guflimc/brick/gui/spigot/menu/SpigotMenuItem.html" class="type-name-link" title="class in com.guflimc.brick.gui.spigot.menu">SpigotMenuItem</a> (implements com.guflimc.brick.gui.api.menu.<a href="com/guflimc/brick/gui/api/menu/MenuItem.html" title="interface in com.guflimc.brick.gui.api.menu">MenuItem</a>)</li>
 <li class="circle">com.guflimc.brick.gui.spigot.listener.<a href="com/guflimc/brick/gui/spigot/listener/SpigotMenuListener.html" class="type-name-link" title="class in com.guflimc.brick.gui.spigot.listener">SpigotMenuListener</a> (implements org.bukkit.event.Listener)</li>
 <li class="circle">com.guflimc.brick.gui.spigot.menu.<a href="com/guflimc/brick/gui/spigot/menu/SpigotRegistry.html" class="type-name-link" title="class in com.guflimc.brick.gui.spigot.menu">SpigotRegistry</a></li>
@@ -105,6 +109,7 @@ loadScripts(document, 'script');</script>
 <section class="hierarchy">
 <h2 title="Interface Hierarchy">Interface Hierarchy</h2>
 <ul>
+<li class="circle">com.guflimc.brick.gui.spigot.api.<a href="com/guflimc/brick/gui/spigot/api/ISpigotHotbar.html" class="type-name-link" title="interface in com.guflimc.brick.gui.spigot.api">ISpigotHotbar</a></li>
 <li class="circle">com.guflimc.brick.gui.spigot.api.<a href="com/guflimc/brick/gui/spigot/api/ISpigotMenu.html" class="type-name-link" title="interface in com.guflimc.brick.gui.spigot.api">ISpigotMenu</a></li>
 <li class="circle">com.guflimc.brick.gui.spigot.api.<a href="com/guflimc/brick/gui/spigot/api/ISpigotMenuBuilder.html" class="type-name-link" title="interface in com.guflimc.brick.gui.spigot.api">ISpigotMenuBuilder</a></li>
 <li class="circle">com.guflimc.brick.gui.spigot.api.<a href="com/guflimc/brick/gui/spigot/api/ISpigotPaginatedMenuBuilder.html" class="type-name-link" title="interface in com.guflimc.brick.gui.spigot.api">ISpigotPaginatedMenuBuilder</a></li>

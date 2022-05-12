@@ -17,20 +17,22 @@ public class SpigotMenuListener implements Listener {
 
     @EventHandler
     public void onQuit(PlayerQuitEvent event) {
-        registry.get(event.getPlayer())
+        registry.findMenu(event.getPlayer())
                 .ifPresent(gui -> gui.dispatchClose(event.getPlayer()));
+        registry.unregister(event.getPlayer());
     }
 
     @EventHandler
     public void onClose(InventoryCloseEvent event) {
-        registry.get(event.getPlayer())
+        registry.findMenu(event.getPlayer())
                 .filter(gui -> gui.inventory == event.getInventory())
                 .ifPresent(gui -> gui.dispatchClose(event.getPlayer()));
+        registry.unregister(event.getPlayer());
     }
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
-        registry.get(event.getWhoClicked())
+        registry.findMenu(event.getWhoClicked())
                 .filter(gui -> gui.inventory == event.getInventory())
                 .ifPresent(gui -> gui.dispatchClick(event));
     }

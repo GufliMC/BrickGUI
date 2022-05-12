@@ -1,10 +1,13 @@
 package com.guflimc.brick.gui.spigot;
 
+import com.guflimc.brick.gui.spigot.api.ISpigotHotbar;
 import com.guflimc.brick.gui.spigot.api.ISpigotMenu;
 import com.guflimc.brick.gui.spigot.api.ISpigotMenuBuilder;
 import com.guflimc.brick.gui.spigot.api.ISpigotPaginatedMenuBuilder;
 import com.guflimc.brick.gui.spigot.builder.SpigotMenuBuilder;
 import com.guflimc.brick.gui.spigot.builder.SpigotPaginatedMenuBuilder;
+import com.guflimc.brick.gui.spigot.hotbar.SpigotHotbar;
+import com.guflimc.brick.gui.spigot.listener.SpigotHotbarListener;
 import com.guflimc.brick.gui.spigot.listener.SpigotMenuListener;
 import com.guflimc.brick.gui.spigot.menu.SpigotMenu;
 import com.guflimc.brick.gui.spigot.menu.SpigotRegistry;
@@ -16,19 +19,25 @@ import java.util.Optional;
 public class SpigotBrickGUI {
 
     private static final SpigotRegistry registry = new SpigotRegistry();
-    private static SpigotMenuListener listener;
+
+    private static SpigotMenuListener menuListener;
+    private static SpigotHotbarListener hotbarListener;
 
     public static void register(JavaPlugin plugin) {
-        if ( listener != null ) {
-            plugin.getLogger().warning("MasterGUI events are already registered. Maybe by another plugin?");
+        if ( menuListener != null || hotbarListener != null) {
+            plugin.getLogger().warning("BrickGUI events are already registered. Maybe by another plugin?");
             return;
         }
-        listener = new SpigotMenuListener(registry);
-        plugin.getServer().getPluginManager().registerEvents(listener, plugin);
+
+        menuListener = new SpigotMenuListener(registry);
+        hotbarListener = new SpigotHotbarListener(registry);
+
+        plugin.getServer().getPluginManager().registerEvents(menuListener, plugin);
+        plugin.getServer().getPluginManager().registerEvents(hotbarListener, plugin);
     }
 
     private static void assertListener() {
-        if ( listener == null ) {
+        if ( menuListener == null ) {
             throw new IllegalStateException("MasterGUI events are not registered. Call BukkitMasterGUI.register(plugin) first.");
         }
     }
@@ -55,6 +64,16 @@ public class SpigotBrickGUI {
 
     public static Optional<ISpigotMenu> openedMenu(Player player) {
         assertListener();
-        return registry.get(player).map(menu -> menu);
+        return registry.findMenu(player).map(menu -> menu);
     }
+
+    public static ISpigotHotbar createHotbar() {
+        return new SpigotHotbar(registry);
+    }
+
+    public static Optional<ISpigotHotbar> openedHotbar(Player player) {
+        return registry.findHotbar(player).map(hotbar -> hotbar);
+    }
+
+
 }

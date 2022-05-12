@@ -1,4 +1,4 @@
-name: Gradle test, build and upload artifact
+name: Gradle test, publish and javadoc
 
 on:
   push:
@@ -17,7 +17,4 @@ jobs:
 
   javadoc:
     needs: test
-    uses: GufliOfficial/.github/.github/workflows/java-gradle-multi-javadoc.yml@main
-    with:
-      projects: |
-        spigot-api
+    uses: GufliOfficial/.github/.github/workflows/java-gradlejavadoc.yml@main

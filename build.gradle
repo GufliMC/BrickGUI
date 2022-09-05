@@ -5,10 +5,10 @@ plugins {
 group 'com.guflimc.brick.gui'
 version = scmVersion.version
 
-def javadocProjects = [project(':spigot-api'), project(':api')]
+def javadocProjects = [project(':spigot-api'), project(':minestom-api'), project(':api')]
 ext.set("javadocProjects", javadocProjects)
 
-def publishProjects = [project(':spigot-api'), project(':api')]
+def publishProjects = [project(':spigot-api'), project(':minestom-api'), project(':api')]
 ext.set("publishProjects", publishProjects)
 
 subprojects {

@@ -1,7 +1,6 @@
 package com.guflimc.brick.gui.spigot.menu;
 
 import com.guflimc.brick.gui.spigot.hotbar.SpigotHotbar;
-import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -10,19 +9,15 @@ import java.util.Optional;
 
 public class SpigotRegistry {
 
-    private final Map<HumanEntity, SpigotMenu> menus = new HashMap<>();
+    private final Map<Player, SpigotISimpleMenu> menus = new HashMap<>();
     private final Map<Player, SpigotHotbar> hotbars = new HashMap<>();
 
-    public void register(HumanEntity entity, SpigotMenu menu) {
-        menus.put(entity, menu);
+    public void register(Player player, SpigotISimpleMenu menu) {
+        menus.put(player, menu);
     }
 
-    public void unregister(HumanEntity entity) {
-        menus.remove(entity);
-    }
-
-    public Optional<SpigotMenu> findMenu(HumanEntity entity) {
-        return Optional.ofNullable(menus.get(entity));
+    public Optional<SpigotISimpleMenu> findMenu(Player player) {
+        return Optional.ofNullable(menus.get(player));
     }
 
     public void register(Player player, SpigotHotbar hotbar) {
@@ -30,6 +25,7 @@ public class SpigotRegistry {
     }
 
     public void unregister(Player player) {
+        menus.remove(player);
         hotbars.remove(player);
     }
 

@@ -1,26 +1,25 @@
 package com.guflimc.brick.gui.spigot.builder;
 
+import com.guflimc.brick.gui.api.click.ClickFunction;
 import com.guflimc.brick.gui.spigot.api.ISpigotMenuBuilder;
 import com.guflimc.brick.gui.api.builder.MenuBuilder;
-import com.guflimc.brick.gui.spigot.menu.SpigotMenu;
-import com.guflimc.brick.gui.spigot.menu.SpigotMenuItem;
+import com.guflimc.brick.gui.spigot.menu.SpigotISimpleMenu;
+import com.guflimc.brick.gui.spigot.menu.SpigotISimpleMenuItem;
 import com.guflimc.brick.gui.spigot.menu.SpigotRegistry;
-import org.bukkit.Sound;
-import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-public class SpigotMenuBuilder extends MenuBuilder<SpigotMenuItem> implements ISpigotMenuBuilder {
+public class SpigotMenuBuilder extends MenuBuilder<SpigotISimpleMenuItem> implements ISpigotMenuBuilder {
 
     private final SpigotRegistry registry;
 
     private String title = null;
 
     public SpigotMenuBuilder(SpigotRegistry registry) {
-        super(SpigotMenuItem.class);
+        super(SpigotISimpleMenuItem.class);
         this.registry =registry;
     }
 
@@ -33,46 +32,41 @@ public class SpigotMenuBuilder extends MenuBuilder<SpigotMenuItem> implements IS
 
     @Override
     public SpigotMenuBuilder withItem(ItemStack itemStack) {
-        super.withItem(new SpigotMenuItem(itemStack));
+        super.withItem(new SpigotISimpleMenuItem(itemStack));
         return this;
     }
 
     @Override
     public SpigotMenuBuilder withItem(ItemStack itemStack, Consumer<InventoryClickEvent> consumer) {
-        super.withItem(new SpigotMenuItem(itemStack, consumer));
+        super.withItem(new SpigotISimpleMenuItem(itemStack, consumer));
         return this;
     }
 
     @Override
     public SpigotMenuBuilder withItem(ItemStack itemStack, Function<InventoryClickEvent, Boolean> consumer) {
-        super.withItem(new SpigotMenuItem(itemStack, SpigotMenu.soundWrapper(consumer)));
+        super.withItem(new SpigotISimpleMenuItem(itemStack, SpigotISimpleMenu.soundWrapper(consumer)));
         return this;
     }
 
     @Override
     public SpigotMenuBuilder withHotbarItem(int index, ItemStack itemStack, Consumer<InventoryClickEvent> consumer) {
-        super.withHotbarItem(index, new SpigotMenuItem(itemStack, consumer));
+        super.withHotbarItem(index, new SpigotISimpleMenuItem(itemStack, consumer));
         return this;
     }
 
     @Override
-    public SpigotMenuBuilder withHotbarItem(int index, ItemStack itemStack, Function<InventoryClickEvent, Boolean> consumer) {
-        this.withHotbarItem(index, itemStack, (event) -> {
-            Sound sound = consumer.apply(event) ? Sound.UI_BUTTON_CLICK : Sound.ENTITY_VILLAGER_NO;
-            if ( event.getWhoClicked() instanceof Player p) {
-                p.playSound(p.getEyeLocation(), sound, 1f, 1f);
-            }
-        });
+    public SpigotMenuBuilder withHotbarItem(int index, ItemStack itemStack, ClickFunction<InventoryClickEvent> consumer) {
+        this.withHotbarItem(index, new SpigotISimpleMenuItem(itemStack, consumer));
         return this;
     }
 
     //
 
     @Override
-    public SpigotMenu build() {
-        SpigotMenuItem[] items = super.compile();
+    public SpigotISimpleMenu build() {
+        SpigotISimpleMenuItem[] items = super.compile();
 
-        SpigotMenu menu = new SpigotMenu(registry, items.length, title);
+        SpigotISimpleMenu menu = new SpigotISimpleMenu(registry, items.length, title);
         for ( int i = 0 ; i < items.length ; i++ ) {
            menu.setItem(i, items[i]);
         }

@@ -1,6 +1,7 @@
 package com.guflimc.brick.gui.spigot.api;
 
-import com.guflimc.brick.gui.spigot.menu.SpigotMenuItem;
+import com.guflimc.brick.gui.api.click.ClickFunction;
+import com.guflimc.brick.gui.spigot.menu.SpigotISimpleMenuItem;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -15,11 +16,11 @@ public interface ISpigotPaginatedMenuBuilder {
 
     ISpigotPaginatedMenuBuilder withNextItem(ItemStack itemStack);
 
-    ISpigotPaginatedMenuBuilder withItems(int size, Function<Integer, SpigotMenuItem> supplier);
+    ISpigotPaginatedMenuBuilder withItems(int size, Function<Integer, SpigotISimpleMenuItem> supplier);
 
     ISpigotPaginatedMenuBuilder withHotbarItem(int index, ItemStack itemStack, Consumer<InventoryClickEvent> consumer);
 
-    ISpigotPaginatedMenuBuilder withHotbarItem(int index, ItemStack itemStack, Function<InventoryClickEvent, Boolean> consumer);
+    ISpigotPaginatedMenuBuilder withHotbarItem(int index, ItemStack itemStack, ClickFunction<InventoryClickEvent> consumer);
 
     ISpigotMenu build();
 

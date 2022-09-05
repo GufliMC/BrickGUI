@@ -9,7 +9,7 @@ import com.guflimc.brick.gui.spigot.builder.SpigotPaginatedMenuBuilder;
 import com.guflimc.brick.gui.spigot.hotbar.SpigotHotbar;
 import com.guflimc.brick.gui.spigot.listener.SpigotHotbarListener;
 import com.guflimc.brick.gui.spigot.listener.SpigotMenuListener;
-import com.guflimc.brick.gui.spigot.menu.SpigotMenu;
+import com.guflimc.brick.gui.spigot.menu.SpigotISimpleMenu;
 import com.guflimc.brick.gui.spigot.menu.SpigotRegistry;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -44,12 +44,12 @@ public class SpigotBrickGUI {
 
     public static ISpigotMenu create(int size) {
         assertListener();
-        return new SpigotMenu(registry, size);
+        return new SpigotISimpleMenu(registry, size);
     }
 
     public static ISpigotMenu create(int size, String title) {
         assertListener();
-        return new SpigotMenu(registry, size, title);
+        return new SpigotISimpleMenu(registry, size, title);
     }
 
     public static ISpigotMenuBuilder builder() {

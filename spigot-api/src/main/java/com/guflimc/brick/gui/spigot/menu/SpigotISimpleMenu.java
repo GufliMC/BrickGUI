@@ -1,7 +1,7 @@
 package com.guflimc.brick.gui.spigot.menu;
 
 import com.guflimc.brick.gui.spigot.api.ISpigotMenu;
-import com.guflimc.brick.gui.api.menu.Menu;
+import com.guflimc.brick.gui.api.menu.ItemContainer;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.HumanEntity;
@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-public class SpigotMenu extends Menu<SpigotMenuItem> implements ISpigotMenu {
+public class SpigotISimpleMenu extends ItemContainer<SpigotISimpleMenuItem> implements ISpigotMenu {
 
     public static Consumer<InventoryClickEvent> soundWrapper(Function<InventoryClickEvent, Boolean> func) {
         return (event) -> {
@@ -36,8 +36,8 @@ public class SpigotMenu extends Menu<SpigotMenuItem> implements ISpigotMenu {
     private final List<Consumer<HumanEntity>> openListeners = new ArrayList<>();
     private final List<Consumer<InventoryClickEvent>> clickListeners = new ArrayList<>();
 
-    public SpigotMenu(SpigotRegistry registry, int size, String title) {
-        super(SpigotMenuItem.class, size);
+    public SpigotISimpleMenu(SpigotRegistry registry, int size, String title) {
+        super(SpigotISimpleMenuItem.class, size);
         this.registry = registry;
 
         if ( title == null ) {
@@ -46,7 +46,7 @@ public class SpigotMenu extends Menu<SpigotMenuItem> implements ISpigotMenu {
         this.inventory = Bukkit.createInventory(null, size, title);
     }
 
-    public SpigotMenu(SpigotRegistry registry, int size) {
+    public SpigotISimpleMenu(SpigotRegistry registry, int size) {
         this(registry, size, null);
     }
 
@@ -57,7 +57,7 @@ public class SpigotMenu extends Menu<SpigotMenuItem> implements ISpigotMenu {
     }
 
     @Override
-    public void setItem(int index, SpigotMenuItem item) {
+    public void setItem(int index, SpigotISimpleMenuItem item) {
         if ( item == null ) {
             super.removeItem(index);
             return;
@@ -71,22 +71,22 @@ public class SpigotMenu extends Menu<SpigotMenuItem> implements ISpigotMenu {
 
     @Override
     public void setItem(int index, ItemStack itemStack) {
-        this.setItem(index, new SpigotMenuItem(itemStack));
+        this.setItem(index, new SpigotISimpleMenuItem(itemStack));
     }
 
     @Override
     public void setItem(int index, ItemStack itemStack, Consumer<InventoryClickEvent> onClick) {
-        this.setItem(index, new SpigotMenuItem(itemStack, onClick));
+        this.setItem(index, new SpigotISimpleMenuItem(itemStack, onClick));
     }
 
     @Override
     public void setItem(int index, ItemStack itemStack, Function<InventoryClickEvent, Boolean> onClick) {
-        this.setItem(index, new SpigotMenuItem(itemStack, soundWrapper(onClick)));
+        this.setItem(index, new SpigotISimpleMenuItem(itemStack, soundWrapper(onClick)));
     }
 
     @Override
     public ItemStack[] items() {
-        return Arrays.stream(super.items).map(SpigotMenuItem::handle).toArray(ItemStack[]::new);
+        return Arrays.stream(super.items).map(SpigotISimpleMenuItem::handle).toArray(ItemStack[]::new);
     }
 
     @Override
@@ -119,7 +119,7 @@ public class SpigotMenu extends Menu<SpigotMenuItem> implements ISpigotMenu {
         if ( event.getClickedInventory() == event.getInventory() ) {
             event.setCancelled(true);
 
-            SpigotMenuItem item = super.items[event.getSlot()];
+            SpigotISimpleMenuItem item = super.items[event.getSlot()];
             if (item != null && item.callback() != null) {
                 item.callback().accept(event);
             }

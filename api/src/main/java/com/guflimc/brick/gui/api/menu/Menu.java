@@ -1,25 +1,19 @@
 package com.guflimc.brick.gui.api.menu;
 
-import java.lang.reflect.Array;
+import net.kyori.adventure.text.Component;
 
-public class Menu<T extends MenuItem> {
+import java.util.function.Consumer;
 
-    protected final T[] items;
+public interface Menu<MIT extends MenuItem, EVT, OEVT, CEVT> extends ItemContainer<MIT> {
 
-    public Menu(Class<T> clazz, int size) {
-        this.items = (T[]) Array.newInstance(clazz, size);
-    }
+    Component title();
 
-    public final int size() {
-        return items.length;
-    }
+    void setTitle(Component title);
 
-    public void removeItem(int index) {
-        items[index] = null;
-    }
+    void addClickListener(Consumer<EVT> callback);
 
-    public void setItem(int index, T item) {
-        items[index] = item;
-    }
+    void addOpenListener(Consumer<OEVT> callback);
+
+    void addCloseListener(Consumer<CEVT> callback);
 
 }

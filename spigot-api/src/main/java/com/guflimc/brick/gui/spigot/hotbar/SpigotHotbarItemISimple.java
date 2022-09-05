@@ -10,24 +10,24 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.function.Consumer;
 
-public class SpigotHotbarItem implements MenuItem {
+public class SpigotHotbarItemISimple implements MenuItem {
 
     private final ItemStack handle;
     private final Consumer<PlayerInteractEvent> interact;
     private final Consumer<PlayerInteractEntityEvent> entityInteract;
     private final Consumer<InventoryClickEvent> click;
 
-    public SpigotHotbarItem(ItemStack handle,
-                            Consumer<PlayerInteractEvent> interact,
-                            Consumer<PlayerInteractEntityEvent> entityInteract,
-                            Consumer<InventoryClickEvent> click) {
+    public SpigotHotbarItemISimple(ItemStack handle,
+                                   Consumer<PlayerInteractEvent> interact,
+                                   Consumer<PlayerInteractEntityEvent> entityInteract,
+                                   Consumer<InventoryClickEvent> click) {
         this.handle = handle;
         this.interact = interact;
         this.entityInteract = entityInteract;
         this.click = click;
     }
 
-    public SpigotHotbarItem(ItemStack handle, Consumer<Player> consumer) {
+    public SpigotHotbarItemISimple(ItemStack handle, Consumer<Player> consumer) {
         this(
                 handle,
                 (e) -> {
@@ -44,7 +44,7 @@ public class SpigotHotbarItem implements MenuItem {
         );
     }
 
-    public SpigotHotbarItem(ItemStack handle) {
+    public SpigotHotbarItemISimple(ItemStack handle) {
         this(handle, null, null, null);
     }
 

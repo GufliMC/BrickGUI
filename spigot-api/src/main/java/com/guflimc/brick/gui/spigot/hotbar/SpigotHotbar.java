@@ -1,6 +1,6 @@
 package com.guflimc.brick.gui.spigot.hotbar;
 
-import com.guflimc.brick.gui.api.menu.Menu;
+import com.guflimc.brick.gui.api.menu.ItemContainer;
 import com.guflimc.brick.gui.spigot.api.ISpigotHotbar;
 import com.guflimc.brick.gui.spigot.menu.SpigotRegistry;
 import org.bukkit.entity.Player;
@@ -15,7 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class SpigotHotbar extends Menu<SpigotHotbarItem> implements ISpigotHotbar {
+public class SpigotHotbar extends ItemContainer<SpigotHotbarItemISimple> implements ISpigotHotbar {
 
     private final List<Consumer<PlayerInteractEvent>> interactListeners = new ArrayList<>();
     private final List<Consumer<PlayerInteractEntityEvent>> interactEntityListeners = new ArrayList<>();
@@ -24,7 +24,7 @@ public class SpigotHotbar extends Menu<SpigotHotbarItem> implements ISpigotHotba
     private final SpigotRegistry registry;
 
     public SpigotHotbar(SpigotRegistry registry) {
-        super(SpigotHotbarItem.class, 9);
+        super(SpigotHotbarItemISimple.class, 9);
         this.registry = registry;
     }
 
@@ -34,7 +34,7 @@ public class SpigotHotbar extends Menu<SpigotHotbarItem> implements ISpigotHotba
     }
 
     @Override
-    public void setItem(int index, SpigotHotbarItem item) {
+    public void setItem(int index, SpigotHotbarItemISimple item) {
         if ( item == null ) {
             super.removeItem(index);
             return;
@@ -47,12 +47,12 @@ public class SpigotHotbar extends Menu<SpigotHotbarItem> implements ISpigotHotba
 
     @Override
     public void setItem(int index, ItemStack itemStack) {
-        this.setItem(index, new SpigotHotbarItem(itemStack));
+        this.setItem(index, new SpigotHotbarItemISimple(itemStack));
     }
 
     @Override
     public void setItem(int index, ItemStack itemStack, Consumer<Player> onClick) {
-        this.setItem(index, new SpigotHotbarItem(itemStack, onClick));
+        this.setItem(index, new SpigotHotbarItemISimple(itemStack, onClick));
     }
 
     @Override
@@ -60,12 +60,12 @@ public class SpigotHotbar extends Menu<SpigotHotbarItem> implements ISpigotHotba
                         Consumer<PlayerInteractEvent> interact,
                         Consumer<PlayerInteractEntityEvent> interactEntity,
                         Consumer<InventoryClickEvent> click) {
-        this.setItem(index, new SpigotHotbarItem(itemStack, interact, interactEntity, click));
+        this.setItem(index, new SpigotHotbarItemISimple(itemStack, interact, interactEntity, click));
     }
 
     @Override
     public ItemStack[] items() {
-        return Arrays.stream(super.items).map(SpigotHotbarItem::handle).toArray(ItemStack[]::new);
+        return Arrays.stream(super.items).map(SpigotHotbarItemISimple::handle).toArray(ItemStack[]::new);
     }
 
     @Override
@@ -95,7 +95,7 @@ public class SpigotHotbar extends Menu<SpigotHotbarItem> implements ISpigotHotba
     public void dispatchInteract(PlayerInteractEvent event) {
         int slot = event.getPlayer().getInventory().getHeldItemSlot();
         if ( slot < items.length ) {
-            SpigotHotbarItem item = items[slot];
+            SpigotHotbarItemISimple item = items[slot];
             if (item != null && item.callback() != null) {
                 item.callback().accept(event);
             }
@@ -107,7 +107,7 @@ public class SpigotHotbar extends Menu<SpigotHotbarItem> implements ISpigotHotba
     public void dispatchInteractEntity(PlayerInteractEntityEvent event) {
         int slot = event.getPlayer().getInventory().getHeldItemSlot();
         if ( slot < items.length ) {
-            SpigotHotbarItem item = super.items[slot];
+            SpigotHotbarItemISimple item = super.items[slot];
             if (item != null && item.entityInteract() != null) {
                 item.entityInteract().accept(event);
             }
@@ -119,8 +119,8 @@ public class SpigotHotbar extends Menu<SpigotHotbarItem> implements ISpigotHotba
     public void dispatchInventoryClick(InventoryClickEvent event) {
         int slot = event.getSlot();
         if ( event.getInventory() instanceof PlayerInventory && slot < super.items.length) {
-            SpigotHotbarItem item = super.items[slot];
-            if (item != null && item.entityInteract() != null) {
+            SpigotHotbarItemISimple item = super.items[slot];
+            if (item != null && item.click() != null) {
                 item.click().accept(event);
             }
         }

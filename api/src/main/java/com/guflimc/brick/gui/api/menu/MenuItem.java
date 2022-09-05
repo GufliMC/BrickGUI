@@ -1,10 +1,10 @@
 package com.guflimc.brick.gui.api.menu;
 
-import java.util.function.Consumer;
+import com.guflimc.brick.gui.api.click.ClickFunction;
 
 public interface MenuItem {
 
     Object handle();
 
-    Consumer<?> callback();
+    ClickFunction<?> clickEvent();
 }

@@ -1,11 +1,11 @@
 package com.guflimc.brick.gui.spigot.api;
 
+import com.guflimc.brick.gui.api.click.ClickFunction;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 public interface ISpigotMenu {
 
@@ -15,7 +15,7 @@ public interface ISpigotMenu {
 
     void setItem(int index, ItemStack itemStack, Consumer<InventoryClickEvent> onClick);
 
-    void setItem(int index, ItemStack itemStack, Function<InventoryClickEvent, Boolean> onClick);
+    void setItem(int index, ItemStack itemStack, ClickFunction<InventoryClickEvent> onClick);
 
     ItemStack[] items();
 

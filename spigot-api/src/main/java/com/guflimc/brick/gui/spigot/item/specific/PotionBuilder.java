@@ -76,4 +76,9 @@ public class PotionBuilder extends AbstractItemStackBuilder<PotionBuilder> {
         return applyMeta(PotionMeta.class, meta ->
                 meta.addCustomEffect(new PotionEffect(type, duration, amplifier, ambient, particles), true));
     }
+
+    public PotionBuilder withPotionEffect(PotionEffectType type, int duration, int amplifier, boolean ambient, boolean particles, boolean icon) {
+        return applyMeta(PotionMeta.class, meta ->
+                meta.addCustomEffect(new PotionEffect(type, duration, amplifier, ambient, particles, icon), true));
+    }
 }

@@ -1,20 +1,14 @@
-package com.guflimc.brick.gui.spigot.item.specific;
+package com.guflimc.brick.gui.minestom.item.specific;
 
-import com.guflimc.brick.gui.spigot.item.AbstractItemStackBuilder;
-import org.bukkit.DyeColor;
-import org.bukkit.Material;
-import org.bukkit.block.banner.Pattern;
-import org.bukkit.block.banner.PatternType;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.BannerMeta;
-
-import java.util.Arrays;
-import java.util.List;
+import com.guflimc.brick.gui.minestom.item.AbstractItemStackBuilder;
+import net.minestom.server.color.DyeColor;
+import net.minestom.server.item.ItemStack;
+import net.minestom.server.item.Material;
 
 public class BannerBuilder extends AbstractItemStackBuilder<BannerBuilder> {
 
     public static BannerBuilder create(DyeColor color) {
-        return new BannerBuilder(new ItemStack(Material.valueOf(color.name() + "_BANNER")));
+        return new BannerBuilder(ItemStack.of(Material.fromNamespaceId(color.name() + "_banner")));
     }
 
     //
@@ -25,6 +19,8 @@ public class BannerBuilder extends AbstractItemStackBuilder<BannerBuilder> {
 
     //
 
+    // TODO not implemented by minestom yet
+    /*
     public BannerBuilder withBannerPattern(Pattern pattern) {
         return applyMeta(BannerMeta.class, meta ->
                 meta.addPattern(pattern));
@@ -46,11 +42,12 @@ public class BannerBuilder extends AbstractItemStackBuilder<BannerBuilder> {
     }
 
     public BannerBuilder withBannerPatterns(Pattern... patterns) {
-        return withBannerPatterns(Arrays.asList(patterns));
+        return withPatterns(Arrays.asList(patterns));
     }
 
-    public BannerBuilder withBannerPatterns(List<Pattern> patterns) {
+    public BannerBuilder withPatterns(List<Pattern> patterns) {
         return applyMeta(BannerMeta.class, meta ->
                 meta.setPatterns(patterns));
     }
+     */
 }

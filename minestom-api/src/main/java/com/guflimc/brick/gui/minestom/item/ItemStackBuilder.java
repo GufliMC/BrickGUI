@@ -1,9 +1,9 @@
-package com.guflimc.brick.gui.spigot.item;
+package com.guflimc.brick.gui.minestom.item;
 
-import com.guflimc.brick.gui.spigot.item.specific.*;
-import org.bukkit.DyeColor;
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
+import com.guflimc.brick.gui.minestom.item.specific.*;
+import net.minestom.server.color.DyeColor;
+import net.minestom.server.item.ItemStack;
+import net.minestom.server.item.Material;
 
 public class ItemStackBuilder extends AbstractItemStackBuilder<ItemStackBuilder> {
 
@@ -14,7 +14,7 @@ public class ItemStackBuilder extends AbstractItemStackBuilder<ItemStackBuilder>
     //
 
     public static ItemStackBuilder of(Material material) {
-        return new ItemStackBuilder(new ItemStack(material)).hideAttributes();
+        return new ItemStackBuilder(ItemStack.of(material)).hideAttributes();
     }
 
     public static ItemStackBuilder of(ItemStack itemStack) {
@@ -22,7 +22,7 @@ public class ItemStackBuilder extends AbstractItemStackBuilder<ItemStackBuilder>
     }
 
     private static ItemStackBuilder of(String material) {
-        return ItemStackBuilder.of(Material.valueOf(material));
+        return ItemStackBuilder.of(Material.fromNamespaceId(material));
     }
 
     // HELPERS
@@ -31,16 +31,16 @@ public class ItemStackBuilder extends AbstractItemStackBuilder<ItemStackBuilder>
         return SkullBuilder.create();
     }
 
-    public static LeatherArmorBuilder leatherArmor(LeatherArmorBuilder.ArmorType type) {
-        return LeatherArmorBuilder.create(type);
-    }
-
-    public static BookBuilder book(BookBuilder.BookType type) {
-        return BookBuilder.create(type);
+    public static WrittenBookBuilder book() {
+        return WrittenBookBuilder.create();
     }
 
     public static FireworkBuilder firework() {
         return FireworkBuilder.create();
+    }
+
+    public static LeatherArmorBuilder leatherArmor(LeatherArmorBuilder.ArmorType type) {
+        return LeatherArmorBuilder.create(type);
     }
 
     public static PotionBuilder potion(PotionBuilder.PotionType type) {
@@ -51,35 +51,32 @@ public class ItemStackBuilder extends AbstractItemStackBuilder<ItemStackBuilder>
         return BannerBuilder.create(color);
     }
 
-    public static ShieldBuilder shield(DyeColor color) {
-        return ShieldBuilder.create(color);
-    }
-
     public static ItemStackBuilder wool(DyeColor color) {
-        return ItemStackBuilder.of(color.name() + "_WOOL");
+        return ItemStackBuilder.of(color.name().toLowerCase() + "_wool");
     }
 
     public static ItemStackBuilder terracotta(DyeColor color) {
-        return ItemStackBuilder.of(color.name() + "_TERRACOTTA");
+        return ItemStackBuilder.of(color.name().toLowerCase() + "_terracotta");
     }
 
     public static ItemStackBuilder glass(DyeColor color) {
-        return ItemStackBuilder.of(color.name() + "_STAINED_GLASS");
+        return ItemStackBuilder.of(color.name().toLowerCase() + "_stained_glass");
     }
 
     public static ItemStackBuilder bed(DyeColor color) {
-        return ItemStackBuilder.of(color.name() + "_BED");
+        return ItemStackBuilder.of(color.name().toLowerCase() + "_bed");
     }
 
     public static ItemStackBuilder carpet(DyeColor color) {
-        return ItemStackBuilder.of(color.name() + "_CARPET");
+        return ItemStackBuilder.of(color.name().toLowerCase() + "_carpet");
     }
 
     public static ItemStackBuilder dye(DyeColor color) {
-        return ItemStackBuilder.of(color.name() + "_DYE");
+        return ItemStackBuilder.of(color.name().toLowerCase() + "_dye");
     }
 
     public static ItemStackBuilder shulkerBox(DyeColor color) {
-        return ItemStackBuilder.of(color.name() + "_SHULKER_BOX");
+        return ItemStackBuilder.of(color.name().toLowerCase() + "_shulker_box");
     }
+
 }

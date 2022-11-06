@@ -5,10 +5,13 @@ import com.guflimc.brick.gui.api.builder.MenuBuilder;
 import com.guflimc.brick.gui.spigot.menu.SpigotMenu;
 import com.guflimc.brick.gui.spigot.menu.SpigotMenuItem;
 import com.guflimc.brick.gui.spigot.menu.SpigotRegistry;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -26,37 +29,42 @@ public class SpigotMenuBuilder extends MenuBuilder<SpigotMenuItem> implements IS
 
 
     @Override
-    public SpigotMenuBuilder withTitle(String title) {
+    public SpigotMenuBuilder withTitle(@NotNull String title) {
         this.title = title;
         return this;
     }
 
     @Override
-    public SpigotMenuBuilder withItem(ItemStack itemStack) {
+    public final SpigotMenuBuilder withTitle(@NotNull Component title) {
+        return withTitle(LegacyComponentSerializer.legacySection().serialize(title));
+    }
+
+    @Override
+    public SpigotMenuBuilder withItem(@NotNull ItemStack itemStack) {
         super.withItem(new SpigotMenuItem(itemStack));
         return this;
     }
 
     @Override
-    public SpigotMenuBuilder withItem(ItemStack itemStack, Consumer<InventoryClickEvent> consumer) {
+    public SpigotMenuBuilder withItem(@NotNull ItemStack itemStack, @NotNull Consumer<InventoryClickEvent> consumer) {
         super.withItem(new SpigotMenuItem(itemStack, consumer));
         return this;
     }
 
     @Override
-    public SpigotMenuBuilder withItem(ItemStack itemStack, Function<InventoryClickEvent, Boolean> consumer) {
+    public SpigotMenuBuilder withItem(@NotNull ItemStack itemStack, @NotNull Function<InventoryClickEvent, Boolean> consumer) {
         super.withItem(new SpigotMenuItem(itemStack, SpigotMenu.soundWrapper(consumer)));
         return this;
     }
 
     @Override
-    public SpigotMenuBuilder withHotbarItem(int index, ItemStack itemStack, Consumer<InventoryClickEvent> consumer) {
+    public SpigotMenuBuilder withHotbarItem(int index, @NotNull ItemStack itemStack, @NotNull Consumer<InventoryClickEvent> consumer) {
         super.withHotbarItem(index, new SpigotMenuItem(itemStack, consumer));
         return this;
     }
 
     @Override
-    public SpigotMenuBuilder withHotbarItem(int index, ItemStack itemStack, Function<InventoryClickEvent, Boolean> consumer) {
+    public SpigotMenuBuilder withHotbarItem(int index, @NotNull ItemStack itemStack, @NotNull Function<InventoryClickEvent, Boolean> consumer) {
         this.withHotbarItem(index, itemStack, (event) -> {
             Sound sound = consumer.apply(event) ? Sound.UI_BUTTON_CLICK : Sound.ENTITY_VILLAGER_NO;
             if ( event.getWhoClicked() instanceof Player p) {

@@ -2,4 +2,5 @@ rootProject.name = 'BrickGUI'
 
 include 'api'
 include 'spigot-api'
+include 'minestom-api'
 

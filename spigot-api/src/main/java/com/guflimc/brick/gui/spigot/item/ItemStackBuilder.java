@@ -35,8 +35,8 @@ public class ItemStackBuilder extends AbstractItemStackBuilder<ItemStackBuilder>
         return LeatherArmorBuilder.create(type);
     }
 
-    public static BookBuilder book(BookBuilder.BookType type) {
-        return BookBuilder.create(type);
+    public static BookBuilder book() {
+        return BookBuilder.create();
     }
 
     public static FireworkBuilder firework() {

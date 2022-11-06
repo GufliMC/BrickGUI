@@ -1,25 +1,39 @@
 package com.guflimc.brick.gui.spigot.api;
 
 import com.guflimc.brick.gui.spigot.menu.SpigotMenuItem;
+import net.kyori.adventure.text.Component;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
 
 public interface ISpigotPaginatedMenuBuilder {
 
-    ISpigotPaginatedMenuBuilder withTitle(Function<Integer, String> supplier);
+    ISpigotPaginatedMenuBuilder withTitle(@NotNull Function<Integer, String> supplier);
 
-    ISpigotPaginatedMenuBuilder withBackItem(ItemStack itemStack);
+    ISpigotPaginatedMenuBuilder withTitle(@NotNull String title);
 
-    ISpigotPaginatedMenuBuilder withNextItem(ItemStack itemStack);
+    ISpigotPaginatedMenuBuilder withTitle(@NotNull Component title);
 
-    ISpigotPaginatedMenuBuilder withItems(int size, Function<Integer, SpigotMenuItem> supplier);
+    ISpigotPaginatedMenuBuilder withBackItem(@NotNull ItemStack itemStack);
 
-    ISpigotPaginatedMenuBuilder withHotbarItem(int index, ItemStack itemStack, Consumer<InventoryClickEvent> consumer);
+    ISpigotPaginatedMenuBuilder withBackItemName(@NotNull Component text);
 
-    ISpigotPaginatedMenuBuilder withHotbarItem(int index, ItemStack itemStack, Function<InventoryClickEvent, Boolean> consumer);
+    ISpigotPaginatedMenuBuilder withBackItemName(@NotNull String text);
+
+    ISpigotPaginatedMenuBuilder withNextItem(@NotNull ItemStack itemStack);
+
+    ISpigotPaginatedMenuBuilder withNextItemName(@NotNull Component text);
+
+    ISpigotPaginatedMenuBuilder withNextItemName(@NotNull String text);
+
+    ISpigotPaginatedMenuBuilder withItems(int size, @NotNull Function<Integer, SpigotMenuItem> supplier);
+
+    ISpigotPaginatedMenuBuilder withHotbarItem(int index, @NotNull ItemStack itemStack, @NotNull Consumer<InventoryClickEvent> consumer);
+
+    ISpigotPaginatedMenuBuilder withHotbarItem(int index, @NotNull ItemStack itemStack, @NotNull Function<InventoryClickEvent, Boolean> consumer);
 
     ISpigotMenu build();
 

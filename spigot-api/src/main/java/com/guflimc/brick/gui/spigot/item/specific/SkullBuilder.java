@@ -1,15 +1,17 @@
 package com.guflimc.brick.gui.spigot.item.specific;
 
 import com.guflimc.brick.gui.spigot.item.AbstractItemStackBuilder;
+import org.apache.commons.lang.RandomStringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.profile.PlayerProfile;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.UUID;
 
 public class SkullBuilder extends AbstractItemStackBuilder<SkullBuilder> {
@@ -32,89 +34,34 @@ public class SkullBuilder extends AbstractItemStackBuilder<SkullBuilder> {
 
     //
 
-    private static Class<?> GameProfile;
-    private static Method GameProfile_getProperties;
-    private static Class<?> Property;
-    private static Method Property_getName;
-    private static Method PropertyMap_put;
-    private static Field CraftMetaSkull_profile;
-    private static Method CraftMetaSkull_setOwningPlayer;
-
-    private static String getServerVersion() {
-        return Bukkit.getServer().getClass().getPackage().getName().substring(23);
-    }
-
-    static {
-        try {
-            GameProfile = Class.forName("com.mojang.authlib.GameProfile");
-            GameProfile_getProperties = GameProfile.getDeclaredMethod("getProperties");
-
-            Property = Class.forName("com.mojang.authlib.properties.Property");
-            Property_getName = Property.getMethod("getName");
-
-            Class<?> PropertyMap = Class.forName("com.mojang.authlib.properties.PropertyMap");
-            PropertyMap_put = PropertyMap.getMethod("put", Object.class, Object.class);
-
-            Class<?> CraftMetaSkull = Class.forName("org.bukkit.craftbukkit." + getServerVersion() + ".inventory.CraftMetaSkull");
-            CraftMetaSkull_profile = CraftMetaSkull.getDeclaredField("profile");
-            CraftMetaSkull_profile.setAccessible(true);
-
-            CraftMetaSkull_setOwningPlayer = CraftMetaSkull.getMethod("setOwningPlayer", OfflinePlayer.class);
-
-            // Optional
-            try {
-                CraftMetaSkull_setOwningPlayer = CraftMetaSkull.getMethod("setOwningPlayer", OfflinePlayer.class);
-            } catch (NoSuchMethodException ignored) {}
-
-        } catch (NoSuchMethodException | ClassNotFoundException | NoSuchFieldException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public SkullBuilder withSkullOwner(OfflinePlayer owner) {
-        if ( CraftMetaSkull_setOwningPlayer == null ) {
-            return this;
-        }
+    public SkullBuilder withPlayer(OfflinePlayer owner) {
         return applyMeta(SkullMeta.class, meta -> {
-            try {
-                CraftMetaSkull_setOwningPlayer.invoke(meta, owner);
-            } catch (IllegalAccessException | InvocationTargetException ignored) {}
+            meta.setOwningPlayer(owner);
         });
     }
 
-    public SkullBuilder withSkullTexture(String texture) {
-        try {
-            UUID uuid = UUID.randomUUID();
-            Object profile = GameProfile.getDeclaredConstructor(UUID.class, String.class).newInstance(uuid, uuid.toString().substring(0, 15));
-            Object property = Property.getDeclaredConstructor(String.class, String.class).newInstance("textures", texture);
-            Object properties = GameProfile_getProperties.invoke(profile);
-            PropertyMap_put.invoke(properties, Property_getName.invoke(property), property);
-            return withSkullProfile(profile);
-        } catch (IllegalArgumentException | IllegalAccessException | NoSuchMethodException | InstantiationException | InvocationTargetException ex) {
-            ex.printStackTrace();
-        }
-        return this;
+    public SkullBuilder withPlayer(PlayerProfile profile) {
+        return applyMeta(SkullMeta.class, meta -> {
+            meta.setOwnerProfile(profile);
+        });
     }
 
-    public SkullBuilder withSkullTexture(UUID uuid) {
-        try {
-            Object profile = GameProfile.getDeclaredConstructor(UUID.class, String.class).newInstance(uuid, uuid.toString().substring(0, 15));
-            return withSkullProfile(profile);
-        } catch (IllegalArgumentException | IllegalAccessException | NoSuchMethodException | InstantiationException | InvocationTargetException ex) {
-            ex.printStackTrace();
-        }
-        return this;
+    public SkullBuilder withPlayer(UUID uuid, String name) {
+        return withPlayer(Bukkit.createPlayerProfile(uuid, name));
     }
 
-    private SkullBuilder withSkullProfile(Object profile) {
+    public SkullBuilder withPlayer(UUID uuid) {
+        return withPlayer(Bukkit.createPlayerProfile(uuid, RandomStringUtils.randomAlphanumeric(16)));
+    }
+
+    public SkullBuilder withTexture(String textureId) {
+        PlayerProfile profile = Bukkit.createPlayerProfile(UUID.randomUUID(), RandomStringUtils.randomAlphanumeric(16));
         try {
-            SkullMeta meta = (SkullMeta) this.itemStack.getItemMeta();
-            CraftMetaSkull_profile.set(meta, profile);
-            this.itemStack.setItemMeta(meta);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
+            profile.getTextures().setSkin(new URL("https://textures.minecraft.net/texture/" + textureId));
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
         }
-        return this;
+        return withPlayer(profile);
     }
 
 }

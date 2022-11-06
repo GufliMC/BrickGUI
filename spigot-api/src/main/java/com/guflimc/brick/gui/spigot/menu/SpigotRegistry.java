@@ -36,4 +36,9 @@ public class SpigotRegistry {
     public Optional<SpigotHotbar> findHotbar(Player player) {
         return Optional.ofNullable(hotbars.get(player));
     }
+
+    public void closeAll() {
+        menus.keySet().forEach(HumanEntity::closeInventory);
+        // TODO hotbars
+    }
 }

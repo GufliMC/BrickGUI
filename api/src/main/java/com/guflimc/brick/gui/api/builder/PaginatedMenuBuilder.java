@@ -41,13 +41,13 @@ public class PaginatedMenuBuilder<T extends MenuItem> {
             throw new IllegalStateException("Supplier cannot be null.");
         }
 
-        int rows = (int) (Math.ceil(this.size / 9.0) * 9);
+        int rows = (int) Math.ceil(this.size / 9.0);
         int pagesize = Math.min(rows, 4) * 9;
         int pages = (int) Math.ceil(rows / 4.0);
 
         int size = pagesize;
         if ( pages > 1 || Arrays.stream(hotbar).anyMatch(Objects::nonNull) ) {
-            size += 14;
+            size += 18;
         }
 
         T[] items = (T[]) Array.newInstance(type, size);
@@ -61,15 +61,15 @@ public class PaginatedMenuBuilder<T extends MenuItem> {
         }
 
         // fill hotbar
-        System.arraycopy(hotbar, 0, items, (this.size - 1) * 9, 9);
+        System.arraycopy(hotbar, 0, items, size - 9, 9);
 
         // pagination buttons
         if ( pages > 1 && page > 0 ) {
-            items[47] = back;
+            items[size - 7] = back;
         }
 
         if ( pages > 1 && page < pages - 1 ) {
-            items[51] = next;
+            items[size - 3] = next;
         }
 
         return items;

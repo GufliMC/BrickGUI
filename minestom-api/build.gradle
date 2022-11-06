@@ -4,7 +4,6 @@ repositories {
 
 dependencies {
     api project(':api')
-    api project(':common')
 
     // platform dependency is provided
     compileOnly 'com.github.Minestom:Minestom:-SNAPSHOT'

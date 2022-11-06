@@ -4,6 +4,10 @@ repositories {
 
 dependencies {
     api project(':api')
+    api 'net.kyori:adventure-api:4.+'
+
+    implementation 'net.kyori:adventure-text-serializer-legacy:4.+'
+    implementation 'net.kyori:adventure-text-serializer-gson:4.+'
 
     // platform dependency is provided
     compileOnly 'org.spigotmc:spigot-api:1.18.2-R0.1-SNAPSHOT'

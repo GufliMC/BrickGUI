@@ -1,5 +1,7 @@
 package com.guflimc.brick.gui.spigot.item;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -13,6 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
+import java.util.stream.StreamSupport;
 
 public abstract class AbstractItemStackBuilder<B extends AbstractItemStackBuilder<B>> {
 
@@ -43,14 +46,14 @@ public abstract class AbstractItemStackBuilder<B extends AbstractItemStackBuilde
     }
 
     public B apply(boolean condition, Consumer<B> consumer) {
-        if ( condition ) {
+        if (condition) {
             consumer.accept(thiz());
         }
         return thiz();
     }
 
     public B apply(boolean condition, Consumer<B> consumer, Consumer<B> elseConsumer) {
-        if ( condition ) {
+        if (condition) {
             consumer.accept(thiz());
         } else {
             elseConsumer.accept(thiz());
@@ -77,12 +80,22 @@ public abstract class AbstractItemStackBuilder<B extends AbstractItemStackBuilde
         return applyMeta(meta -> meta.setDisplayName(name));
     }
 
+    public B withName(Component name) {
+        return withName(LegacyComponentSerializer.legacySection().serialize(name));
+    }
+
     public B withType(Material material) {
         return transform(itemStack -> itemStack.setType(material));
     }
 
     public B withLore(String... lines) {
         return withLore(Arrays.asList(lines));
+    }
+
+    public B withLore(Component... lines) {
+        return withLore(Arrays.stream(lines)
+                .map(line -> LegacyComponentSerializer.legacySection().serialize(line))
+                .toList());
     }
 
     public B withLore(Iterable<String> lines) {

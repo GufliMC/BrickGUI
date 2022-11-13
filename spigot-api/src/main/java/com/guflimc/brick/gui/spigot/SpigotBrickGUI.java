@@ -3,6 +3,7 @@ package com.guflimc.brick.gui.spigot;
 import com.guflimc.brick.gui.spigot.api.*;
 import com.guflimc.brick.gui.spigot.builder.SpigotConfirmationMenuBuilder;
 import com.guflimc.brick.gui.spigot.builder.SpigotMenuBuilder;
+import com.guflimc.brick.gui.spigot.builder.SpigotMenuRowBuilder;
 import com.guflimc.brick.gui.spigot.builder.SpigotPaginatedMenuBuilder;
 import com.guflimc.brick.gui.spigot.hotbar.SpigotHotbar;
 import com.guflimc.brick.gui.spigot.listener.SpigotHotbarListener;
@@ -69,6 +70,11 @@ public class SpigotBrickGUI {
     public static ISpigotConfirmationMenuBuilder confirmationBuilder() {
         assertListener();
         return new SpigotConfirmationMenuBuilder(registry);
+    }
+
+    public static ISpigotMenuRowBuilder rowBuilder() {
+        assertListener();;
+        return new SpigotMenuRowBuilder();
     }
 
     public static Optional<ISpigotMenu> openedMenu(Player player) {

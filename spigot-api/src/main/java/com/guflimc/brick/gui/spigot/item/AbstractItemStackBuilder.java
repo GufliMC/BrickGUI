@@ -15,7 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
-import java.util.stream.StreamSupport;
+import java.util.regex.Pattern;
 
 public abstract class AbstractItemStackBuilder<B extends AbstractItemStackBuilder<B>> {
 
@@ -102,7 +102,10 @@ public abstract class AbstractItemStackBuilder<B extends AbstractItemStackBuilde
         return applyMeta(meta -> {
             List<String> lore = meta.getLore() == null ? new ArrayList<>() : meta.getLore();
             for (String line : lines) {
-                lore.add(ChatColor.GRAY + ChatColor.translateAlternateColorCodes('&', line));
+                String[] sub = line.split(Pattern.quote("\n"));
+                for (String subline : sub) {
+                    lore.add(ChatColor.GRAY + ChatColor.translateAlternateColorCodes('&', subline));
+                }
             }
             meta.setLore(lore);
         });

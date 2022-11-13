@@ -33,7 +33,7 @@ public class MenuScheme {
         return mask.length;
     }
 
-    public boolean isMasked(int index) {
+    public boolean validate(int index) {
         int row = index / 9;
         int pos = index % 9;
 
@@ -47,7 +47,7 @@ public class MenuScheme {
     public List<Integer> indices() {
         List<Integer> indices = new ArrayList<>();
         for (int index = 0; index < mask.length * 9; index++) {
-            if (isMasked(index)) {
+            if (validate(index)) {
                 indices.add(index);
             }
         }

@@ -6,6 +6,7 @@ import com.guflimc.brick.gui.spigot.item.ItemStackBuilder;
 import com.guflimc.brick.gui.spigot.menu.SpigotMenu;
 import com.guflimc.brick.gui.spigot.menu.SpigotRegistry;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -19,10 +20,10 @@ public class SpigotConfirmationMenuBuilder implements ISpigotConfirmationMenuBui
     private String title;
 
     private ItemStack deny = ItemStackBuilder.of(Material.RED_TERRACOTTA)
-            .withName(Component.text("Deny"))
+            .withName(Component.text("Deny", NamedTextColor.RED))
             .build();
     private ItemStack accept = ItemStackBuilder.of(Material.GREEN_TERRACOTTA)
-            .withName(Component.text("Accept"))
+            .withName(Component.text("Accept", NamedTextColor.GREEN))
             .build();
 
     private Runnable denyAction = () -> {

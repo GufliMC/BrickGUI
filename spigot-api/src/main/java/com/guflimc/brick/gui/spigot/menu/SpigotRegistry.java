@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 public class SpigotRegistry {
 
@@ -38,7 +39,7 @@ public class SpigotRegistry {
     }
 
     public void closeAll() {
-        menus.keySet().forEach(HumanEntity::closeInventory);
+        Set.copyOf(menus.keySet()).forEach(HumanEntity::closeInventory);
         // TODO hotbars
     }
 }

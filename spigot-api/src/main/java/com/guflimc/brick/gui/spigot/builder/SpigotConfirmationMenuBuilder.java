@@ -20,10 +20,10 @@ public class SpigotConfirmationMenuBuilder implements ISpigotConfirmationMenuBui
     private String title;
 
     private ItemStack deny = ItemStackBuilder.of(Material.RED_TERRACOTTA)
-            .withName(Component.text("Deny", NamedTextColor.RED))
+            .withName(Component.text("Cancel", NamedTextColor.RED))
             .build();
     private ItemStack accept = ItemStackBuilder.of(Material.GREEN_TERRACOTTA)
-            .withName(Component.text("Accept", NamedTextColor.GREEN))
+            .withName(Component.text("Confirm", NamedTextColor.GREEN))
             .build();
 
     private Runnable denyAction = () -> {
@@ -93,11 +93,11 @@ public class SpigotConfirmationMenuBuilder implements ISpigotConfirmationMenuBui
 
     public final ISpigotMenu build() {
         ISpigotMenu menu = new SpigotMenu(registry, 27, title);
-        menu.setItem(11, deny, e -> {
-            denyAction.run();
-        });
-        menu.setItem(15, accept, e -> {
+        menu.setItem(11, accept, e -> {
             acceptAction.run();
+        });
+        menu.setItem(15, deny, e -> {
+            denyAction.run();
         });
         if (display != null) {
             menu.setItem(13, display);

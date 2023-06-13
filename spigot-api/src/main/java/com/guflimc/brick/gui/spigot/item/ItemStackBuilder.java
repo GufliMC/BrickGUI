@@ -3,6 +3,7 @@ package com.guflimc.brick.gui.spigot.item;
 import com.guflimc.brick.gui.spigot.item.specific.*;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
+import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 
 public class ItemStackBuilder extends AbstractItemStackBuilder<ItemStackBuilder> {
@@ -81,5 +82,9 @@ public class ItemStackBuilder extends AbstractItemStackBuilder<ItemStackBuilder>
 
     public static ItemStackBuilder shulkerBox(DyeColor color) {
         return ItemStackBuilder.of(color.name() + "_SHULKER_BOX");
+    }
+
+    public static ItemStackBuilder egg(EntityType entityType) {
+        return ItemStackBuilder.of(entityType.name() + "_SPAWN_EGG");
     }
 }

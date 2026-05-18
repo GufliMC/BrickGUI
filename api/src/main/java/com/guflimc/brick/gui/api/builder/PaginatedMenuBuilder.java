@@ -46,7 +46,8 @@ public class PaginatedMenuBuilder<T extends MenuItem> {
         int pages = (int) Math.ceil(rows / 4.0);
 
         int size = pagesize;
-        if ( pages > 1 || Arrays.stream(hotbar).anyMatch(Objects::nonNull) ) {
+        boolean hb = pages > 1 || Arrays.stream(hotbar).anyMatch(Objects::nonNull);
+        if ( hb ) {
             size += 18;
         }
 
@@ -61,7 +62,9 @@ public class PaginatedMenuBuilder<T extends MenuItem> {
         }
 
         // fill hotbar
-        System.arraycopy(hotbar, 0, items, size - 9, 9);
+        if ( hb ) {
+            System.arraycopy(hotbar, 0, items, size - 9, 9);
+        }
 
         // pagination buttons
         if ( pages > 1 && page > 0 ) {

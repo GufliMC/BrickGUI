@@ -93,12 +93,14 @@ public class SpigotConfirmationMenuBuilder implements ISpigotConfirmationMenuBui
 
     public final ISpigotMenu build() {
         ISpigotMenu menu = new SpigotMenu(registry, 27, title);
-        menu.setItem(11, accept, e -> {
+        menu.setItem(11, accept, SpigotMenu.soundWrapper(e -> {
             acceptAction.run();
-        });
-        menu.setItem(15, deny, e -> {
+            return true;
+        }));
+        menu.setItem(15, deny, SpigotMenu.soundWrapper(e -> {
             denyAction.run();
-        });
+            return true;
+        }));
         if (display != null) {
             menu.setItem(13, display);
         }
